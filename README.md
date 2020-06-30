@@ -1,4 +1,15 @@
-# Overledger Network Gateway
+<p align="center">
+    <img src="resources/overledger-network.png">
+</p>
+<p align="center">
+    <a href="https://github.com/quantnetwork/overledger-network-gateway/releases" alt="Releases">
+        <img src="https://img.shields.io/github/v/release/quantnetwork/overledger-network-gateway?include_prereleases" /></a>
+    <a href="https://twitter.com/intent/follow?screen_name=quant_network">
+        <img src="https://img.shields.io/twitter/follow/quant_network?style=social"
+            alt="follow on Twitter"></a>
+</p>
+
+The instructions below outline the steps to run an Overledger Network Gateway.
 
 ## Requirements
 - Docker
