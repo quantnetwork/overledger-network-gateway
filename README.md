@@ -18,23 +18,26 @@ The instructions below outline the steps to run an Overledger Network Gateway.
 - BPI Key
 
 ## Getting Started
-First, run a local instance of MongoDB through Docker:
+First, we need to run a local instance of MongoDB through Docker. Before we can do that, we need to create a Docker network for the two containers to be able to communicate:
 ```sh
-docker run -d --name quant-mongo -p 27017:27017 mongo:latest
+docker network create ovl-net
+```
+```sh
+docker run -d --name ovl-mongo --network ovl-net -p 27017:27017 mongo:latest
 ```
 
 ## Running
 We will now run a container based on the Docker image for the Overledger Network Gateway, passing in the relevant environment variables.
 
-Make sure to replace the values for GATEWAY_ID with your BPI Key, and for the GATEWAY_HOST and MONGO_DB_HOST with the Public IP of your machine.
->Note: on OS X, you will have to replace the value for MONGO_DB_HOST with "host.docker.internal"
+Make sure to replace the values for GATEWAY_ID with your BPI Key, and for GATEWAY_HOST with the Public IP of your machine.
+
 ```sh
 docker run -dit \
     --name overledger-network-gateway \
     -p 8080:8080 -p 11337:11337 \
     -e GATEWAY_ID="bpiKey" \
     -e GATEWAY_HOST="127.0.0.1" \
-    -e MONGO_DB_HOST="127.0.0.1" \
+    -e MONGO_DB_HOST="ovl-mongo" \
     quantnetwork/overledger-network-gateway:latest
 ```
 
