@@ -27,6 +27,7 @@ docker run -d --name ovl-mongo --network ovl-net -p 27017:27017 mongo:latest
 ```
 
 ## Running
+
 We will now run a container based on the Docker image for the Overledger Network Gateway, passing in the relevant environment variables.
 
 Make sure to replace the values for GATEWAY_ID with your BPI Key, and for GATEWAY_HOST with the Public IP of your machine.
@@ -49,6 +50,35 @@ docker logs -f overledger-network-gateway
 
 The Gateway will start up with a random number of connectors between C1 and C10.
 Make sure when submitting requests that you submit them for the connectors that are up, as they toggle on and off on a scheduled basis. You can find the active connectors by checking the latest log entries.
+
+## Running using docker compose
+
+Make sure to replace the values for GATEWAY_ID with your BPI Key, and for GATEWAY_HOST with the Public IP of your machine
+in the docker-compose.yaml file
+
+
+Start the gateway with the following command:
+
+```sh
+docker-compose up -d
+```
+
+After running the gateway, we can follow the logs using:
+```sh
+docker-compose logs -f
+```
+
+Stop the gateway with the following command:
+
+```sh
+docker-compose down 
+```
+
+
+
+
+
+
 
 ## API
 
