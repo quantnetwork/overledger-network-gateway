@@ -34,6 +34,7 @@ Make sure to replace the values for GATEWAY_ID with your BPI Key, and for GATEWA
 ```sh
 docker run -dit \
     --name overledger-network-gateway \
+    --network ovl-net \
     -p 8080:8080 -p 11337:11337 \
     -e GATEWAY_ID="bpiKey" \
     -e GATEWAY_HOST="127.0.0.1" \
