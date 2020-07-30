@@ -65,7 +65,7 @@ with the body:
 
 ## Upgrading
 
-To upgrade the Overledger Network Gateway, we need to stop the running Docker container, remove the container and the old Docker image and then start our Gateway again using the command from the running section. Optionally, you can also clean and restart the database by following the same steps.
+To upgrade the Overledger Network Gateway, we need to stop the running Docker container, remove the container and pull the newest Docker image. Then, we can start our Gateway again using the command from the running section. Optionally, we can also clean and restart the database by following the same steps.
 
 To list all running containers, as well as containers that have been shut down:
 
@@ -73,23 +73,23 @@ To list all running containers, as well as containers that have been shut down:
 docker ps -a
 ```
 
-Then, we need to pick the ID of the Overledger Network Gateway container, remove it and stop it.
+Then, we need to pick the ID of the Overledger Network Gateway container, stop it and remove it.
 
 ```
-docker stop <your-container-id-here>
+docker stop gateway-container-id-here
 ```
 
 ```
-docker rm <your-container-id-here>
+docker rm gateway-container-id-here
 ```
 
-Finally, we have to remove the old Gateway Image:
+Finally, we have to update the old Overledger Network Gateway image. The default tag that will be pulled is 'latest':
 
 ```
-docker rmi quantnetwork/overledger-network-gateway
+docker pull quantnetwork/overledger-network-gateway
 ```
 
-Now that we have a clean state, we can just run the Gateway as we would normally, and the updated image will be pulled from the Docker Repository.
+Now that we have upgraded our Docker image, we can just run the Gateway as we would normally:
 
 ```sh
 docker run -dit \
