@@ -63,7 +63,7 @@ with the body:
 }
 ```
 
-# Upgrading
+## Upgrading
 
 To upgrade the Overledger Network Gateway, we need to stop the running Docker container, remove the container and the old Docker image and then start our Gateway again using the command from the running section. Optionally, you can also clean and restart the database by following the same steps.
 
