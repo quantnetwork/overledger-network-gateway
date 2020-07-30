@@ -36,8 +36,8 @@ docker run -dit \
     --name overledger-network-gateway \
     --network ovl-net \
     -p 8080:8080 -p 11337:11337 \
-    -e GATEWAY_ID="bpiKey" \
-    -e GATEWAY_HOST="127.0.0.1" \
+    -e GATEWAY_ID="your-bpi-key" \
+    -e GATEWAY_HOST="your-public-IP" \
     -e MONGO_DB_HOST="ovl-mongo" \
     quantnetwork/overledger-network-gateway:latest
 ```
@@ -61,4 +61,43 @@ with the body:
 	"connectorId": "C1",
 	"task": "Send transaction."
 }
+```
+
+# Upgrading
+
+To upgrade the Overledger Network Gateway, we need to stop the running Docker container, remove the container and the old Docker image and then start our Gateway again using the command from the running section. Optionally, you can also clean and restart the database by following the same steps.
+
+To list all running containers, as well as containers that have been shut down:
+
+```
+docker ps -a
+```
+
+Then, we need to pick the ID of the Overledger Network Gateway container, remove it and stop it.
+
+```
+docker stop <your-container-id-here>
+```
+
+```
+docker rm <your-container-id-here>
+```
+
+Finally, we have to remove the old Gateway Image:
+
+```
+docker rmi quantnetwork/overledger-network-gateway
+```
+
+Now that we have a clean state, we can just run the Gateway as we would normally, and the updated image will be pulled from the Docker Repository.
+
+```sh
+docker run -dit \
+    --name overledger-network-gateway \
+    --network ovl-net \
+    -p 8080:8080 -p 11337:11337 \
+    -e GATEWAY_ID="your-bpi-key" \
+    -e GATEWAY_HOST="your-public-IP" \
+    -e MONGO_DB_HOST="ovl-mongo" \
+    quantnetwork/overledger-network-gateway:latest
 ```
