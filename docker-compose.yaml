@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    container_name: mongo
+    ports:
+      - "27017"
+    networks:
+      - back-tier
+
+  gateway:
+    image: quantnetwork/overledger-network-gateway:latest
+    restart: always
+    ports:
+       - "8080:8080"
+       - "11337:11337"
+    environment:
+      - GATEWAY_ID=<INSERT_ID>
+      - GATEWAY_HOST=<INSERT_IP>
+      - MONGO_DB_HOST=mongo
+    depends_on:
+      - "mongo"
+    container_name: overledger-network-gateway
+    networks:
+      - back-tier
+
+networks:
+  back-tier:
