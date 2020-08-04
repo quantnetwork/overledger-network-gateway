@@ -35,9 +35,10 @@ Make sure to replace the values for GATEWAY_ID with your BPI Key, and for GATEWA
 ```sh
 docker run -dit \
     --name overledger-network-gateway \
+    --network ovl-net \
     -p 8080:8080 -p 11337:11337 \
-    -e GATEWAY_ID="bpiKey" \
-    -e GATEWAY_HOST="127.0.0.1" \
+    -e GATEWAY_ID="your-bpi-key" \
+    -e GATEWAY_HOST="your-public-IP" \
     -e MONGO_DB_HOST="ovl-mongo" \
     quantnetwork/overledger-network-gateway:latest
 ```
@@ -52,6 +53,11 @@ The Gateway will start up with a random number of connectors between C1 and C10.
 Make sure when submitting requests that you submit them for the connectors that are up, as they toggle on and off on a scheduled basis. You can find the active connectors by checking the latest log entries.
 
 ## Running using docker compose
+
+
+First Docker compose needs to be installed: https://docs.docker.com/compose/install/
+
+Then clone this repository (or just download the docker-compose.yaml file)
 
 Make sure to replace the values for GATEWAY_ID with your BPI Key, and for GATEWAY_HOST with the Public IP of your machine
 in the docker-compose.yaml file
@@ -76,10 +82,6 @@ docker-compose down
 
 
 
-
-
-
-
 ## API
 
 We can now submit mock requests to our Gateway, using the /do-task API:
@@ -91,3 +93,44 @@ with the body:
 	"task": "Send transaction."
 }
 ```
+
+
+## Upgrading
+
+To upgrade the Overledger Network Gateway, we need to stop the running Docker container, remove the container and pull the newest Docker image. Then, we can start our Gateway again using the command from the running section. Optionally, we can also clean and restart the database by following the same steps.
+
+To list all running containers, as well as containers that have been shut down:
+
+```
+docker ps -a
+```
+
+Then, we need to pick the ID of the Overledger Network Gateway container, stop it and remove it.
+
+```
+docker stop gateway-container-id-here
+```
+
+```
+docker rm gateway-container-id-here
+```
+
+Finally, we have to update the old Overledger Network Gateway image. The default tag that will be pulled is 'latest':
+
+```
+docker pull quantnetwork/overledger-network-gateway
+```
+
+Now that we have upgraded our Docker image, we can just run the Gateway as we would normally:
+
+```sh
+docker run -dit \
+    --name overledger-network-gateway \
+    --network ovl-net \
+    -p 8080:8080 -p 11337:11337 \
+    -e GATEWAY_ID="your-bpi-key" \
+    -e GATEWAY_HOST="your-public-IP" \
+    -e MONGO_DB_HOST="ovl-mongo" \
+    quantnetwork/overledger-network-gateway:latest
+```
+
